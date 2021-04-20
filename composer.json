@@ -16,11 +16,14 @@
             "role": "Developer"
         }
     ],
-    "keywords": ["wordpress", "plugin", "metabox"],
-    "homepage": "https://github.com/JayWood/CPT_Core",
-    "type": "wordpress-plugin",
+    "scripts": {
+        "test": "pest ./"
+    },
+    "keywords": ["wordpress", "post type", "library"],
+    "homepage": "https://github.com/JayWood/CPT_Factory",
+    "type": "library",
     "support": {
-        "issues": "https://github.com/JayWood/CPT_Core/issues"
+        "issues": "https://github.com/JayWood/CPT_Factory/issues"
     },
     "require": {
         "php": "^7.3 || ^8.0"
@@ -29,7 +32,9 @@
         "composer/installers": "~1.0"
     },
     "autoload": {
-        "files": ["CPT_Core.php"]
+        "psr-4": {
+            "Com\\Plugish\\Libraries\\CPT_Factory\\": "src/"
+        }
     },
     "require-dev": {
         "pestphp/pest": "^1.0",

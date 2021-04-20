@@ -1,91 +1,27 @@
-CPT_Core
-=========
+# CPT Factory
 
-A tool to make custom post type registration just a bit simpler. Automatically registers post type labels and messages, and provides helpful methods.
+A tool to make custom post type registration just a bit simpler. Automatically registers post type labels and messages, 
+and provides helpful methods.
 
-Also see [Taxonomy_Core](https://github.com/jtsternberg/Taxonomy_Core).
+> If you're looking at this library for a single post type, **this is overkill**. Just register a single type using the
+> core [register_post_type](https://developer.wordpress.org/reference/functions/register_post_type/) function.
 
-<a href="https://webdevstudios.com/contact/"><img src="https://webdevstudios.com/wp-content/uploads/2018/04/wds-github-banner.png" alt="WebDevStudios. WordPress for big brands."></a>
+### Disclaimer
 
-#### The simple way:
-```php
-<?php
+This is a hard-fork from the original [CPT Core](https://github.com/WebDevStudios/CPT_Core) repository provided by 
+[WebDevStudios](https://webdevstudios.com). Various updates have been made and given the likelyhood of getting this merged back in ( considering the
+substantial amount of changes ) - a hard-fork may have been best. This is OSS after all, so feel free to merge or fork
+as yous see fit. 
 
-/**
- * Load CPT_Core.
- */
-require_once 'CPT_Core/CPT_Core.php';
+### TODO
+* Unit tests w/ PEST
 
-/**
- * Will register a 'Q & A' CPT
- */
-register_via_cpt_core( array(
-	__( 'Q & A', 'your-text-domain' ), // Singular
-	__( 'Q & As', 'your-text-domain' ), // Plural
-	'q-and-a-items' // Registered name/slug
-) );
-```
-
-#### The object-oriented way!
-```php
-<?php
-
-/**
- * Load CPT_Core.
- */
-require_once 'CPT_Core/CPT_Core.php';
-
-/**
- * Creating a custom class allows you to override core methods, like CPT_Core::columns, and CPT_Core::columns_display
- */
-class Actress_CPT extends CPT_Core {
-
-	/**
-	 * Register Custom Post Types. See documentation in CPT_Core, and in wp-includes/post.php
-	 */
-	public function __construct() {
-
-		// Register this cpt
-		// First parameter should be an array with Singular, Plural, and Registered name
-		parent::__construct(
-			array( 
-				__( 'Actress', 'your-text-domain' ),
-				__( 'Actresses', 'your-text-domain' ),
-				'film-actress'
-			),
-			array( 
-				'supports' => array( 'title', 'editor', 'excerpt', 'thumbnail' ), 
-			)
-		);
-
-	}
-
-	/**
-	 * Registers admin columns to display. Hooked in via CPT_Core.
-	 * @since  0.1.0
-	 * @param  array  $columns Array of registered column names/labels
-	 * @return array           Modified array
-	 */
-	public function columns( $columns ) {
-		$new_column = array(
-			'headshot' => sprintf( __( '%s Headshot', 'your-text-domain' ), $this->post_type( 'singular' ) ),
-		);
-		return array_merge( $new_column, $columns );
-	}
-
-	/**
-	 * Handles admin column display. Hooked in via CPT_Core.
-	 * @since  0.1.0
-	 * @param  array  $column Array of registered column names
-	 */
-	public function columns_display( $column, $post_id ) {
-		switch ( $column ) {
-			case 'headshot':
-				the_post_thumbnail();
-				break;
-		}
-	}
-
-}
-new Actress_CPT();
-```
+### Changes from CPT_Core by WebDevStudios
+* PHPcs implementation
+* Travis builds
+* Easier to use with composer includes using PSR-4
+* Update to PHP 7.3 minimum.
+* Stricter i18n functions where appropriate.
+* Use exceptions in place of wp_die
+* Allow defaults to be overridden instead of hard-coding them.
+* Set the new `type` property instead of overwriting CPT_Core::cpt_args
