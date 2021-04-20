@@ -153,8 +153,6 @@ class Factory {
 
 		$this->cpt_args           = wp_parse_args( $this->args, $this->post_defaults );
 		$this->cpt_args['labels'] = wp_parse_args( $this->cpt_args['labels'], $labels );
-		
-		error_log( print_r( $this->cpt_args, 1 ) );
 
 		return $this->cpt_args;
 	}
