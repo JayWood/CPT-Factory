@@ -32,6 +32,9 @@
         "composer/installers": "~1.0"
     },
     "autoload": {
+        "files": [
+            "src/functions.php"
+        ],
         "psr-4": {
             "Com\\Plugish\\Libraries\\CPT_Factory\\": "src/"
         }

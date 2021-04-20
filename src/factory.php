@@ -62,6 +62,8 @@ class Factory {
 		$this->slug     = $slug;
 		$this->plural   = $plural ?? $singular;
 		$this->args     = $args;
+
+		$this->hooks();
 	}
 
 	/**
