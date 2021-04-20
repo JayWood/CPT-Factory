@@ -60,7 +60,7 @@ class Factory {
 
 		$this->singular = $singular;
 		$this->slug     = $slug;
-		$this->plural   = $plural ?? $singular;
+		$this->plural   = empty( $plural ) ? $singular : $plural;
 		$this->args     = $args;
 
 		$this->hooks();
@@ -71,7 +71,7 @@ class Factory {
 	 * @return bool
 	 */
 	private function is_hierarchical() : bool {
-		return (bool) $this->args['hierarchical'] ?? false;
+		return (bool) isset( $this->args['hierarchical'] ) ? $this->args['hierarchical'] : false;
 	}
 
 	/**
@@ -153,6 +153,8 @@ class Factory {
 
 		$this->cpt_args           = wp_parse_args( $this->args, $this->post_defaults );
 		$this->cpt_args['labels'] = wp_parse_args( $this->cpt_args['labels'], $labels );
+		
+		error_log( print_r( $this->cpt_args, 1 ) );
 
 		return $this->cpt_args;
 	}
